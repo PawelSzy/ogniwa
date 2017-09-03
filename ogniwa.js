@@ -10,7 +10,7 @@
 //    1508, 1627, 1557,
 //    1967];
 
-var nors = [4,5,3,2,17,12,9];
+var nors = [4,5,3,2,17,12,9, 13, 6];
 
 
 /*
@@ -25,22 +25,23 @@ function get_nor(sum, nors)
         return [];
     }
 
-    if(nors.length == 1 && nors[0] == sum)
+    if(nors.length == 1)
     {
-        return nors;
+        return nors[0] == sum ? nors : [] ;
     }
+
 
     if(nors.length == 2) {
         if(nors[0] + nors[1] == sum) {
             return nors;
-        } else if(nors[0]== sum) {
+        } else if(nors[0] == sum) {
             return [nors[0]];
-        } else if(nors[1] = sum) {
+        } else if(nors[1] == sum) {
             return [nors[1]];
         }
-
-
-
+        else {
+            return [];
+        }
     }
 
     var nors = get_red_of_too_big(nors, sum);
@@ -48,18 +49,23 @@ function get_nor(sum, nors)
 
     var biggest = nors.shift();
     var smaller_sum = sum - biggest;
-    nors = filter_who_can_be_sum(nors, sum, biggest);
 
-    console.log('smaller_sum', smaller_sum);
-    console.log('nors', nors);
-    var nors_array= get_nor(smaller_sum, nors);
-    console.log('******************');
-    console.log(nors_array);
-    console.log('******************');
+    var filtered_nors = filter_who_can_be_sum(nors, sum, biggest);
+    var smaller_solutions= get_nor(smaller_sum, filtered_nors);
 
-    console.log(nors);
+    if(smaller_solutions.length > 0)
+    {
+        var solutions1 = smaller_solutions.map(function(solution) {
+            return [biggest].concat(solution);
+        });
+    }
+    else {
+        return get_nor(sum,nors);
+    }
 
-    return [biggest].concat(nors_array);
+    var solutions2 = get_nor(sum,nors);
+
+    return solutions1.concat(solutions2);
 }
 
 function get_red_of_too_big(nors, sum)
