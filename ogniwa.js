@@ -14,10 +14,7 @@
 var nors = [4,5,3,2,17,12,9, 13, 6, 7];
 
 function calculate_nors(sum, nors)  {
-    nors = sort_nors(nors);
-    return get_nors(sum, nors);
-
-    function get_nors(sum, nors) {
+    var  get_nors = memoize(function(sum, nors) {
         if (sum < 0)
         {
             return 0;
@@ -69,7 +66,10 @@ function calculate_nors(sum, nors)  {
                         }, 0) == sum;
                 });
         }
-    }
+    });
+
+    nors = sort_nors(nors);
+    return get_nors(sum, nors);
 }
 
 function get_red_of_too_big(nors, sum)
@@ -82,6 +82,22 @@ function get_red_of_too_big(nors, sum)
 function sort_nors(nors) {
     return nors.sort(function (a, b) {  return b - a;  });
 }
+
+function memoize(fn) {
+    memoize.cache = {};
+    return function() {
+        var key = JSON.stringify(arguments);
+        if(memoize.cache[key]) {
+            return memoize.cache[key];
+        }
+        else {
+            var val = fn.apply(this, arguments);
+            memoize.cache[key] = val;
+            return val;
+        }
+    };
+}
+
 
 var sums = calculate_nors(15, nors);
 
