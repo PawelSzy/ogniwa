@@ -98,8 +98,6 @@ function memoize(fn) {
     };
 }
 
-
 var sums = calculate_nors(15, nors);
-
 
 console.log(sums);
