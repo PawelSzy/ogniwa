@@ -18,6 +18,10 @@ function calculate_nors(sum, nors)  {
     return get_nors(sum, nors);
 
     function get_nors(sum, nors) {
+        if (sum < 0)
+        {
+            return 0;
+        }
         var nors = get_red_of_too_big(nors, sum);
 
         if (nors.length == 0) {
