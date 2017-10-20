@@ -1,9 +1,6 @@
 /**
  * Created by pawel on 19.10.17.
  */
-
-
-
 var nors = [1414, 1590, 1520, 1630, 1609, 1482, 1581,
     1576, 1667, 1956,
     1608, 1446, 1428,
@@ -100,8 +97,3 @@ function memoize(fn) {
         }
     };
 }
-
-//var sums = calculate_nors(15, nors);
-var sums = calculate_nors(16025, nors);
-
-console.log(sums);
