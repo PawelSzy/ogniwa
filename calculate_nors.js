@@ -12,16 +12,16 @@ $("#calculate_nors").click(function(e) {
     console.log(nors);
 
     var sum = parseInt($("#sum_input").val());
-    var nors_table = calculate_nors(sum, nors);
-    show_calculatated_nors(sum, nors_table);
+    var calculated_nors_table = calculate_nors(sum, nors);
+    show_calculatated_nors(sum, nors, calculated_nors_table);
 });
 
-function show_calculatated_nors(sum, nors_table) {
+function show_calculatated_nors(sum, nors, calculated_nors_table) {
 
-    console.log(nors_table);
+    console.log(calculated_nors_table);
 
     $("#table_of_ogniwa").empty();
-    nors_table.forEach(function (calc_nors, index) {
+    calculated_nors_table.forEach(function (calc_nors, index) {
         var nors_string = calc_nors.join();
         var closure_index = index;
         $("#table_of_ogniwa").append(function() {
@@ -32,9 +32,26 @@ function show_calculatated_nors(sum, nors_table) {
             + "</td></tr>"
             ).click(function() {
                 console.log('index', index);
-                show_calculatated_nors(sum, nors_table.filter(function(elem, nor_index) {
-                    return nor_index != index;
-                }))
+                var closure_index = index;
+                $('#table_of_chosen_ogniwa').append($(this));
+
+                console.log('nors_tab', calculated_nors_table.filter(function(elem, nor_index) {
+                    return nor_index != closure_index;
+                }));
+
+                console.log('calc_nors', calc_nors);
+
+                console.log('nors1', nors);    
+                    
+                calc_nors.forEach(function(nors_value){
+                    console.log('nors_value', nors_value);
+                    nors = delete_value_from_nors(nors, nors_value)
+                });
+
+                console.log('nors2', nors);
+                console.log('sum', sum);
+                console.log('nors_calc', calculate_nors(sum, nors));
+                show_calculatated_nors(sum, nors, calculate_nors(sum, nors));
             })
         })
     });
@@ -43,4 +60,19 @@ function show_calculatated_nors(sum, nors_table) {
     //$('.nors_row').click(function () {
     //    $index$(this).attr('id');
     //});
+}
+
+
+function delete_value_from_nors(nors, value) {
+    find_and_delete_from_array(value, nors);
+    return nors;
+}
+
+function find_and_delete_from_array(value, arr) {
+    index = arr.indexOf(value);
+    if (index > -1) {
+        arr.splice(index, 1);
+    }
+    
+    console.log('ind', arr);
 }

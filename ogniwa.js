@@ -1,12 +1,12 @@
 /**
  * Created by pawel on 19.10.17.
  */
-var nors = [1414, 1590, 1520, 1630, 1609, 1482, 1581,
-    1576, 1667, 1956,
-    1608, 1446, 1428,
-    1620, 1690, 1574,
-    1508, 1627, 1557,
-    1967];
+//var nors = [1414, 1590, 1520, 1630, 1609, 1482, 1581,
+//    1576, 1667, 1956,
+//    1608, 1446, 1428,
+//    1620, 1690, 1574,
+//    1508, 1627, 1557,
+//    1967];
 
 //var nors = [4,5,3,2,17,12,9, 13, 6, 7];
 
@@ -47,25 +47,13 @@ function calculate_nors(sum, nors)  {
                 return [biggest].concat(one_of_nors);
             });
 
-        if (nors2.length > 0) {
-            return nors2
-                .concat(get_nors(sum, nors))
-                .filter(function (array) {
-                    return array.reduce(function (a, b) {
-                            return a + b
-                        }, 0) == sum;
-                });
-        } else {
-            return get_nors(sum, nors)
-                .filter(function (array) {
-                    if(typeof array == 'number') {
-                        var array = [array];
-                    }
-                    return array.reduce(function (a, b) {
-                            return a + b
-                        }, 0) == sum;
-                });
-        }
+        return nors2
+            .concat(get_nors(sum, nors))
+            .filter(function (array) {
+                return array.reduce(function (a, b) {
+                        return a + b
+                    }, 0) == sum;
+            });
     });
 
     nors = sort_nors(nors);
