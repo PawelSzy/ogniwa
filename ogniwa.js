@@ -28,7 +28,7 @@ function calculate_nors(sum, nors)  {
 
         if (nors.length == 2) {
             if (nors[0] + nors[1] == sum) {
-                return nors;
+                return [nors];
             } else if (nors[0] == sum) {
                 return [nors[0]];
             } else if (nors[1] == sum) {
@@ -42,14 +42,23 @@ function calculate_nors(sum, nors)  {
         var biggest = nors.shift();
         var smaller_sum = sum - biggest;
 
+        if(smaller_sum == 0) {
+            return [biggest].concat(get_nors(sum, nors));
+        }
+
         var nors2 = get_nors(smaller_sum, nors)
             .map(function (one_of_nors) {
                 return [biggest].concat(one_of_nors);
             });
 
+
         return nors2
             .concat(get_nors(sum, nors))
             .filter(function (array) {
+                if(!(array instanceof Array)) {
+                    console.log('arr', array);
+                    debugger;
+                }
                 return array.reduce(function (a, b) {
                         return a + b
                     }, 0) == sum;
